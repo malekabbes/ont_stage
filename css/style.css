@@ -1,0 +1,73 @@
+
+   .log{
+
+    width:250px;
+    height:300px;
+    border-radius:25px;
+    background-color:rgba(255, 255, 255, 0.5);
+    margin:auto;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    position: absolute;
+    color:rgb(68, 68, 189);
+}
+.ins{
+
+    width:250px;
+    height:450px;
+    border-radius:25px;
+    background-color:rgba(255, 255, 255, 0.5);
+    margin:auto;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    position: absolute;
+}
+.wosst{
+    margin-top:18%;    
+}
+.middle{
+    margin-top:3%;
+}
+.inp{
+    padding:7px;
+}
+.logo{
+    width:250px;;
+    height:60px;
+    border-radius:2px;
+}
+.pagination{
+    padding: 10px 0;
+  }
+  
+  .pagination ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .pagination .pag{
+    display: inline-block;
+    padding: 10px 8px;
+    color: #222;
+  }
+.p8 .pag{
+    background-color: #b30404c9;
+    margin: auto 5px;
+    color: #fff;
+    font-weight: bold;
+    border: 2px solid #cc2e2e9f;
+  }
+  
+  .pag:hover{
+    background-color: rgba(255, 0, 0, 0.452);
+
+  }
+
+
+.status-available{color:#2FC332;}
+.status-not-available{color:#D60202;}
