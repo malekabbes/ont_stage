@@ -1,4 +1,5 @@
 <?php session_start();
+    require_once("DBController.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,14 +12,39 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
 
 </head>
+<script>
+function checkmail() {
+	jQuery.ajax({
+	url: "checkmail.php",
+	data:'email='+$("#email").val(),
+	type: "POST",
+	success:function(data){
+        $("#email-availability-status").html(data);
+        
+        
 
+	},
+	error:function (){}
+	});
+}
+function checkphone() {
+	jQuery.ajax({
+	url: "checkphone.php",
+	data:'mobile='+$("#test").val(),
+	type: "POST",
+	success:function(data){
+        $("#phone-availability-status").html(data);
+
+	},
+	error:function (){}
+	});
+}
+
+</script>
 <body>
 <nav class="uk-navbar-container uk-margin" uk-navbar>
     <div class="uk-navbar-center">
@@ -36,28 +62,34 @@
 
     </div>
 </nav>
-<form method="POST" action="inscription.php">
+<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 <div class="ins uk-container" data-aos="flip-right">
 <img class="logo" src="img/teledif.gif"></img>
 <div class="wosst">
 <div class="inp uk-inline" >
+
             <span class="uk-form-icon" uk-icon="icon: user"></span>
             <input name="nom" class="uk-input" type="text" placeholder="Votre nom et prenom">
         </div>   
 
         <div class="inp uk-inline">
             <span class="uk-form-icon" uk-icon="icon: phone"></span>
-            <input name="mobile" class="uk-input" type="text" placeholder="Votre numero de telephone">
+            <input id="test" name="mobile" class="uk-input" type="text" placeholder="Votre numero de telephone" onBlur="checkphone()">
         </div>
+        <span id="phone-availability-status"></span>
         <div class="inp uk-inline">
             <span class="uk-form-icon" uk-icon="icon: mail"></span>
-            <input name="email" class="uk-input"  type="mail" placeholder="Votre email">
-
+            <input id="email" name="email" class="uk-input"  type="mail" placeholder="Votre email" onBlur="checkmail()">
         </div>
-   
+        <span id="email-availability-status"></span>
         <div class="inp uk-inline">
             <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-            <input name="pass" class="uk-input" type="password" placeholder="Votre mot de passe">
+            <input id="pass" name="pass" class="uk-input" type="password" placeholder="Votre mot de passe">
+           
+        </div>
+        <center><progress id="progress" value="0" max="100">70</progress>
+        <div class="pr">
+        <p id="proglabel" style="border-radius:15px;margin-top:0px;"></p><center>
         </div>
         
            <center><button name="reg" class="conex uk-button uk-button-primary">Inscription</button></center>
@@ -68,6 +100,7 @@
   <?php 
   if ($_SERVER["REQUEST_METHOD"] == "POST"){
  include("inc/db.php");
+
 // Database connexion
 $mysqli = new mysqli($mysql_host,$mysql_username,$mysql_password,$mysql_database);
 if ($mysqli->connect_error){
@@ -87,7 +120,7 @@ if (empty($username)){
 })
 </script>
 <?php }
-elseif (empty($phone)|| !filter_var($phone,FILTER_VALIDATE_INT)){
+elseif (empty($phone)|| !filter_var($phone,FILTER_VALIDATE_INT) ){
     ?>
       <script>
         Swal.fire({
@@ -131,6 +164,8 @@ $statement->execute();
   icon: 'success',
   title: 'Felicitations !',nom,
   text: done
+}).then(function(){
+    window.location.href = 'index.php';
 })
 </script> 
 <?php } } } ?>
@@ -148,4 +183,7 @@ $statement->execute();
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="js/aos.js"></script>
 <script src="js/anim.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/progbar.js"></script>
+
 </html>
