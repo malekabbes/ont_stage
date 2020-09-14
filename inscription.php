@@ -1,12 +1,19 @@
 <?php session_start();
     require_once("DBController.php");
+    include("inc/login-inc.php");
+    if (isset($_SESSION["loggedin"])=="oui"){
+        echo '<h1>Vous etes deja connecté</h1>';
+        die();
+    } else{
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONT - Inscription</title>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+        <title>ONT - Inscription</title>
 <link href="css/aos.css" rel="stylesheet">
 <link rel="stylesheet" href="css/ui.css" />
 <link rel="stylesheet" href="css/style.css">
@@ -62,6 +69,7 @@ function checkphone() {
 
     </div>
 </nav>
+
 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 <div class="ins uk-container" data-aos="flip-right">
 <img class="logo" src="img/teledif.gif"></img>
@@ -97,18 +105,22 @@ function checkphone() {
            
            
            
-  <?php 
+<?php 
   if ($_SERVER["REQUEST_METHOD"] == "POST"){
  include("inc/db.php");
-
+ $ont = $_POST;
+    $username = filter_var($ont["nom"],FILTER_SANITIZE_STRING);
+    $phone = filter_var($ont["mobile"],FILTER_SANITIZE_NUMBER_INT);
+    $email = filter_var($ont["email"],FILTER_SANITIZE_EMAIL);
+    $password = filter_var($ont["pass"],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 // Database connexion
-$mysqli = new mysqli($mysql_host,$mysql_username,$mysql_password,$mysql_database);
 if ($mysqli->connect_error){
     echo ("error");
 }
 // ?>
 <?php  
 if(isset($_POST["reg"])) { 
+ include_once("validate.php");
 
 if (empty($username)){
     ?>
@@ -119,8 +131,10 @@ if (empty($username)){
   text: 'Vérifier votre nom!',
 })
 </script>
-<?php }
-elseif (empty($phone)|| !filter_var($phone,FILTER_VALIDATE_INT) ){
+<?php 
+}
+
+elseif (empty($phone)|| !filter_var($phone,FILTER_VALIDATE_INT) || $validphone==FALSE){
     ?>
       <script>
         Swal.fire({
@@ -130,7 +144,7 @@ elseif (empty($phone)|| !filter_var($phone,FILTER_VALIDATE_INT) ){
 })
 </script>
 <?php }
-elseif (empty($email) || !filter_var($email,FILTER_VALIDATE_EMAIL)){
+elseif (empty($email) || !filter_var($email,FILTER_VALIDATE_EMAIL) || $validmail==FALSE){
     ?>
         <script>
         Swal.fire({
@@ -152,7 +166,8 @@ elseif (empty($password)) {
 </script>
 <?php } 
 else {
-	//bind parameters for markers, where (s = string, i = integer, d = double,  b = blob)
+    //bind parameters for markers, where (s = string, i = integer, d = double,  b = blob)
+    
 $statement=$mysqli->prepare("INSERT INTO utilisateurs (username,phone,email,password) VALUES(?,?,?,?)");
 $statement->bind_param('siss',$username,$phone,$email,$password);
 $statement->execute();
@@ -168,7 +183,7 @@ $statement->execute();
     window.location.href = 'index.php';
 })
 </script> 
-<?php } } } ?>
+<?php } } } }?>
 </div>
 
 </div>

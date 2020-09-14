@@ -56,5 +56,4 @@ password.addEventListener('keyup', function() {
   document.getElementById("progress").value = progress;
   document.getElementById("proglabel").style.color = color;
   document.getElementById("proglabel").style.border = border;
-    $('#submit').prop('disabled',false);
 });
