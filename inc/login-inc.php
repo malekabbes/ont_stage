@@ -3,26 +3,28 @@ require_once("db.php");
 if(isset($_POST["log"])) {
 $logmail=$_POST['email'];
 $logpass=$_POST['password'];
-$select="SELECT * FROM utilisateurs WHERE email='$logmail' and password='$logpass'";
+$select="SELECT * FROM utilisateurs WHERE email='$logmail'";
 $result=mysqli_query($mysqli,$select);
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
-	if(mysqli_num_rows($result) == 1) {
-		$_SESSION['access'] = "oui";
+$pwverif=password_verify($logpass,$row['password']);
+	if((mysqli_num_rows($result) == 1) AND ($pwverif==true)) {
+		   $_SESSION['access'] = "oui";
         $_SESSION['email']   = $_POST['email'];
         $_SESSION['username']   = $row['username'];
         $_SESSION['usertype'] = $row['usertype'];
+        $_SESSION['departement'] = $row['departement'];
         $_SESSION['loggedin'] = TRUE;
         if ($row['usertype']=="ADMIN"){
         echo   "<script>
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Bonjour ADMINISTRATEUR',
+          title: 'Bonjour Directeur de Departement ".$row['departement']."',
           showConfirmButton: false,
           timer: 3500
         })
        .then(function(){
-                    window.location.href = 'interface.php';
+                    window.location.href = 'ont_admin/interface.php';
                 })
                 </script>
                    ";
@@ -32,12 +34,12 @@ $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
-                title: 'Bonjour Cher utilisateur',
+                title: 'Bonjour employé de de Departement ".$row['departement']."',
                 showConfirmButton: false,
                 timer: 2500
               })
                .then(function(){
-                          window.location.href = 'monespace.php';
+                          window.location.href = 'utilisateur/monespace.php';
                       })
                       </script>
                          ";

@@ -2,8 +2,28 @@
 session_start();
 session_unset();
 session_destroy();
-echo("<center><h4 id='redirect'></h4></center>");
-echo("
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirection</title>
+  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+
+</head>
+<body>
+
+  
+ <div class="loading-log">
+ <center>
+<img src="../img/loading.gif" alt="loading">
+<h2 id='redirect'></h2>
+</center>
+</div>
+ </div>
+<?php echo("
 <script>
 var i = 0;
 var txt = 'Vous etes en cours de redirection . . .'; 
@@ -19,9 +39,11 @@ function typeWriter() {
 typeWriter();
 setInterval(function(){
     window.location.href = '../index.php';
-},2000);
+},3000);
 
 </script>
 
-");
-?>
+"); ?>
+
+</body>
+</html>

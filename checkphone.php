@@ -1,8 +1,9 @@
 <?php
 require_once("DBController.php");
 $db_handle = new DBController();
-if (!empty($_POST["mobile"])) {
-  $query = "SELECT * FROM utilisateurs WHERE phone='" . $_POST["mobile"] . "'";
+$mob=$_POST["mobile"];
+if (!empty($mob)) {
+  $query = "SELECT * FROM utilisateurs WHERE phone='$mob'";
   $user_count = $db_handle->numRows($query);
   if($user_count>0) {
       echo "<span class='status-not-available'>Votre Numero est deja utilisé </span>";

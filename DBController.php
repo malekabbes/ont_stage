@@ -6,7 +6,7 @@ class DBController {
     private $mysql_password = "root";
     private $mysql_database = "ont_stage";
 
-    private  $conn;
+    public $conn;
     
     function __construct() {
         $this->conn = $this->connectDB();
@@ -29,5 +29,6 @@ class DBController {
         $rowcount = mysqli_num_rows($result);
         return $rowcount;
     }
+
 }
 ?>

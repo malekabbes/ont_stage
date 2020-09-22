@@ -31,8 +31,7 @@ function checkmail() {
 	type: "POST",
 	success:function(data){
         $("#email-availability-status").html(data);
-        
-        
+   
 
 	},
 	error:function (){}
@@ -41,7 +40,7 @@ function checkmail() {
 function checkphone() {
 	jQuery.ajax({
 	url: "checkphone.php",
-	data:'mobile='+$("#test").val(),
+	data:'mobile='+$("#phone").val(),
 	type: "POST",
 	success:function(data){
         $("#phone-availability-status").html(data);
@@ -82,9 +81,13 @@ function checkphone() {
 
         <div class="inp uk-inline">
             <span class="uk-form-icon" uk-icon="icon: phone"></span>
-            <input id="test" name="mobile" class="uk-input" type="text" placeholder="Votre numero de telephone" onBlur="checkphone()">
+            <input id="phone" name="mobile" class="uk-input" type="text" placeholder="Votre numero de telephone" onBlur="checkphone()">
         </div>
         <span id="phone-availability-status"></span>
+        <div class="inp uk-inline">
+            <span class="uk-form-icon" uk-icon="icon: users"></span>
+            <input name="depart" class="uk-input" type="text" placeholder="Votre Departement">
+        </div>
         <div class="inp uk-inline">
             <span class="uk-form-icon" uk-icon="icon: mail"></span>
             <input id="email" name="email" class="uk-input"  type="mail" placeholder="Votre email" onBlur="checkmail()">
@@ -100,19 +103,24 @@ function checkphone() {
         <p id="proglabel" style="border-radius:15px;margin-top:0px;"></p><center>
         </div>
         
-           <center><button name="reg" class="conex uk-button uk-button-primary">Inscription</button></center>
+           <center><button type="submit" name="reg" class="conex uk-button uk-button-primary">Inscription</button></center>
+           <div class="login">
+           <h6 class="signup">J'ai déja un compte <a href="index.php"><u>,Revenir</u></a> </h6> 
+</div>
            
            
            
            
 <?php 
-  if ($_SERVER["REQUEST_METHOD"] == "POST"){
  include("inc/db.php");
+  if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
  $ont = $_POST;
     $username = filter_var($ont["nom"],FILTER_SANITIZE_STRING);
     $phone = filter_var($ont["mobile"],FILTER_SANITIZE_NUMBER_INT);
     $email = filter_var($ont["email"],FILTER_SANITIZE_EMAIL);
     $password = filter_var($ont["pass"],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $depart= filter_var($ont["depart"],FILTER_SANITIZE_STRING);
 // Database connexion
 if ($mysqli->connect_error){
     echo ("error");
@@ -144,6 +152,17 @@ elseif (empty($phone)|| !filter_var($phone,FILTER_VALIDATE_INT) || $validphone==
 })
 </script>
 <?php }
+elseif (empty($depart)){
+    ?>
+  <script>
+        Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Veuillez saisir votre Departement SVP !',
+})
+</script>
+<?php 
+}
 elseif (empty($email) || !filter_var($email,FILTER_VALIDATE_EMAIL) || $validmail==FALSE){
     ?>
         <script>
@@ -167,14 +186,17 @@ elseif (empty($password)) {
 <?php } 
 else {
     //bind parameters for markers, where (s = string, i = integer, d = double,  b = blob)
-    
-$statement=$mysqli->prepare("INSERT INTO utilisateurs (username,phone,email,password) VALUES(?,?,?,?)");
-$statement->bind_param('siss',$username,$phone,$email,$password);
+$password=password_hash($password,PASSWORD_DEFAULT);   
+//  if($mysqli==false)echo "<script> alert(\"no connection error\") </script>";
+$statement=$mysqli->prepare("INSERT INTO utilisateurs (username,phone,email,password,departement) VALUES(?,?,?,?,?)");
+// if($statement===false)echo "<script> alert(\"prepare error\") </script>";
+$statement->bind_param('sisss',$username,$phone,$email,$password,$depart);
 $statement->execute();
+// if($debuggg===false)echo "<script> alert(\"execute error".htmlspecialchars($statement->error)."\") </script>"; 
 ?>
           <script>
               var nom ="<?php print $username ?>"
-              var done =" <?php print "Bonjour ". $username ."! , Votre compte est en cours d'etre validé , consultez votre email ".$email." ... "?>"
+              var done =" <?php print "Bonjour ". $username ."! , Votre compte est maintenant validé , consultez votre Directeur de departement ".$depart." ... "?>"
           Swal.fire({
   icon: 'success',
   title: 'Felicitations !',nom,

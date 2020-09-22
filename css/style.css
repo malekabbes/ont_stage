@@ -1,22 +1,22 @@
 
    .log{
 
-    width:250px;
-    height:300px;
-    border-radius:25px;
-    background-color:rgba(255, 255, 255, 0.5);
-    margin:auto;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
+    width: 15rem;
+    height: max-content;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     position: absolute;
-    color:rgb(68, 68, 189);
+ 
 }
 .ins{
 
-    width:250px;
-    height:480px;
+    width: 15rem;
+    height: max-content;;
     border-radius:25px;
     background-color:rgba(255, 255, 255, 0.5);
     margin:auto;
@@ -87,4 +87,24 @@
   width:100%;
   border-radius:15px;
   color:rgb(255, 5, 5);
+}
+.loading-log{
+  bottom: 0;
+  content: '';
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.login{
+  color: black;
+  font-weight: lighter;
+}
+.inscrit{
+  padding-top:2%;
+}
+.signup{
+  color: black;
+  font-weight: lighter;
 }

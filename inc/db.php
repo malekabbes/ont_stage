@@ -6,8 +6,6 @@
     $mysql_password="root";
     $mysql_database="ont_stage";
     $mysqli = mysqli_connect($mysql_host, $mysql_username, $mysql_password, $mysql_database);
-
-
   }
  // CONDITIONS
  

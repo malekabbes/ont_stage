@@ -50,8 +50,6 @@ require_once("inc/db.php");
             <span class="uk-form-icon" uk-icon="icon: user"></span>
             <input name="email" class="uk-input" type="mail" placeholder="Votre email">
         </div>
-   
-
 
         <div class="inp uk-inline">
             <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
