@@ -97,6 +97,7 @@ html,body {background:white;}
          include("../inc/emp-tab.php");?>
     </tbody>
 </table>
+<?php include("../inc/edit-emp.php"); ?>
 <form action="" id="formD" method="POST">
   <center>
    <?php include("../inc/setting-emp.php"); ?>
@@ -105,19 +106,17 @@ html,body {background:white;}
         <legend class="uk-legend">Modifier les coordonnées </legend>
 
         <div class="uk-margin">
-            <input name="username" class="addn uk-input" type="text" placeholder="Modifier le nom" value="<?php $edit_username?>">
+            <input name="username" class="addn uk-input" type="text" placeholder="Modifier le nom" >
         </div>
 
         <div class="uk-margin">
-            <input name="email" class="addn uk-input" type="mail" placeholder="Modifier l'Email " value="<?php $edit_mail?>">
+            <input name="email" class="addn uk-input" type="mail" placeholder="Modifier l'Email " >
         </div>
         <div class="uk-margin">
-        <input name="poste" class="addn uk-input" type="text" placeholder="Modifier la Poste" value="<?php $edit_poste?>">
-        </div>
-        <div class="uk-margin">
-        <input name="conge" class="addn uk-input" type="date" placeholder="Modifier la date du congé" value="<?php $edit_conge?>">
+        <input name="conge" class="addn uk-input" type="date" placeholder="Modifier la date du congé" ">
         </div>
         <center><button name="edituser" class="validate-btn uk-button uk-button-primary" type="submit">Valider</button></center>
+        <input type="text" id="IDs" value="0" name="IDs" hidden>
 
     </fieldset>
  

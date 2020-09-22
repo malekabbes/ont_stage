@@ -19,7 +19,7 @@ while($row=mysqli_fetch_assoc($rez))
     <td>$nom_tab</td>
     <td>$email_tab</td>
     <td>$conge_tab</td>
-    <td><a  id='user$uid' onclick='Set_table(this);' name='setting' class='w3-bar-item w3-button setting'><i   class='fa fa-cog'></i></a></td>
+    <td><a  id='user$uid' onclick='Set_table(this);' name='setting' class='w3-bar-item w3-button setting'><i class='fa fa-cog'></i></a></td>
     
     </tr>
     ";
