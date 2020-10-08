@@ -6,11 +6,14 @@ $logpass=$_POST['password'];
 $select="SELECT * FROM utilisateurs WHERE email='$logmail'";
 $result=mysqli_query($mysqli,$select);
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+
 $pwverif=password_verify($logpass,$row['password']);
-	if((mysqli_num_rows($result) == 1) AND ($pwverif==true)) {
+	if((mysqli_num_rows($result) == 1) AND ($pwverif==true) AND (isset($pwverif))) {
+       $_SESSION['myid']= $row['ID'];
 		   $_SESSION['access'] = "oui";
         $_SESSION['email']   = $_POST['email'];
         $_SESSION['username']   = $row['username'];
+        $_SESSION['phone']   = $row['phone'];
         $_SESSION['usertype'] = $row['usertype'];
         $_SESSION['departement'] = $row['departement'];
         $_SESSION['loggedin'] = TRUE;
@@ -56,8 +59,8 @@ $pwverif=password_verify($logpass,$row['password']);
             })
                        </script>";
         }
-    } 
-
+      }
+  
     
 
 // if (empty($logmail) || empty($logpass)){

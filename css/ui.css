@@ -12,7 +12,9 @@ html {
 body {
     margin: 0;
     background-image: url(../img/bk.webp);
-    background-size: cover
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 a:active,

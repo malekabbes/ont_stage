@@ -8,8 +8,8 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['usertype'] != 'ADMIN') {
 include("../inc/login-inc.php");
 ?>
 <html>
+  <head>
 <title>ONT - Admin</title>
-<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -22,6 +22,7 @@ include("../inc/login-inc.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="../js/time.js"></script>
+</head>
     <style>
   html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 html,body {background:white;}
@@ -56,35 +57,46 @@ html,body {background:white;}
     <a href="interface.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Accueil</a>
     <a href="param.php" class="w3-bar-item w3-button w3-padding " ><i class="fa fa-cog fa-fw"></i>  Settings</a>
     <a href="liste-emp.php" class="w3-bar-item w3-button w3-padding "><i class="fa fa-users fa-fw"></i>  Les Employés</a>
-    <a href="actualite.php" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-bullseye fa-fw"></i> Actualités</a>  </div>
+    <a href="actualite.php" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-bullseye fa-fw"></i> Actualités</a> 
+    <a href="activites.php" class="w3-bar-item w3-button w3-padding"><i class="fas fa-eye fa-fw"></i> Activités</a>  
+    <a href="demandes.php" class="w3-bar-item w3-button w3-padding"><i class="fas fa-paste"></i> Demandes Internes</a>    
+  </div>
   <br><br><br>
-    <form action="../inc/dec.php" method="POST">
-  <center><button name="dec" class="w3-button w3-red">Se Deconnecter</button></center>
-</form>
-</nav>
+          <form action="../inc/dec.php" method="POST">
+        <center><button name="dec" class="w3-button w3-red">Se Deconnecter</button></center>
+      </form>
+      </nav>
 
 
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+      <!-- Overlay effect when opening sidebar on small screens -->
+      <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main bg" style="height:max-height;margin-left:300px;margin-top:43px;">
+      <!-- !PAGE CONTENT! -->
+      <div class="w3-main bg" style="height:max-height;margin-left:300px;margin-top:43px;">
 
-  <!-- Header -->
-  <header class="w3-container" style="padding-top:22px;background:white;">
-    <h5 class="ont-dash"><b><i class="fas fa-user-shield"></i>&nbsp;&nbsp;ONT - Liste Des Actualités </b></h5>
-  </header>
-  <br>
-  <table class="uk-table uk-table-justify uk-table-divider ont-tab">
-    <thead>
-      <tr>
-          <td>
-        <a class="addnew uk-icon-link" uk-icon="plus-circle"></a>
+        <!-- Header -->
+        <header class="w3-container" style="padding-top:22px;background:white;">
+          <h5 class="ont-dash"><b><i class="fas fa-user-shield"></i>&nbsp;&nbsp;ONT - Liste Des Actualités </b></h5>
+        </header>
+        <br>
+        <table class="uk-table uk-table-justify uk-table-divider ont-tab">
+          <thead>
+            <tr>
+                <td>
+              <a class="addnew uk-icon-link" uk-icon="plus-circle"></a>
+          </td>
+          <td></td>
+                  <td>Recherche <form class="uk-search uk-search-default" action="" method="POST">
+              <input id="rech" name ="search" class="uk-search-input"  type="search" placeholder="Search...">
+              <td style="margin-left:0;">
+              <button  type="submit" class="uk-button uk-button-primary uk-button-small perso-btn">Recherche</button>
+              <!-- <button  name="revenir" type="submit" class="uk-button uk-button-primary uk-button-small perso-btn">Revenir</button> -->
+
+            </form>
 </td>
-        <td>Recherche <form class="uk-search uk-search-default">
-    <input class="uk-search-input" type="search" placeholder="Search...">
-</form></td>
-        <td></td>
+          
+
+          
      
       </tr>
         <tr>
@@ -96,14 +108,28 @@ html,body {background:white;}
     </thead>
     <tbody>
         <?php
-         include("../inc/actualite-tab.php");?>
+         include("../inc/actualite-tab.php");
+         ?>
+         
     </tbody>
 </table>
+<ul class="uk-pagination uk-flex-center" uk-margin>
+<?php
+if($page>1)echo "<li class=\"uk-disabled\"><span>...</span></li>";
+if($page>0)echo "<li><a href=\"actualite.php?page=".($page-1)."\"><span uk-pagination-previous></span></a></li>";
+echo "<li class=\"uk-active\"><span>".$page."</span></li>";
+if( ceil(($rowcountss+0.)/$pagerowlimit)>=($page+1))echo "<li><a href=\"actualite.php?page=".($page+1)."\"><span>".($page+1)."</span></a></li>";
+if( ceil(($rowcountss+0.)/$pagerowlimit)>=($page+2))echo "<li><a href=\"actualite.php?page=".($page+2)."\"><span uk-pagination-next></span></a></li>";
+if( ceil(($rowcountss+0.)/$pagerowlimit)>=($page+3))echo "<li class=\"uk-disabled\"><span>...</span></li>";
+?>
+</ul>
 </center>
 
 <!-- L'edition des actualités -->
 
 <center>
+<?php include("../inc/SMTP/smtp-actualite.php");?>
+
 <div class="editac" style="display:none;">
 <?php include("../inc/edit-actualite.php"); ?>
 <form id="formD" action="" method="POST">
@@ -112,11 +138,11 @@ html,body {background:white;}
         <legend class="uk-legend">Modifier cette nouvautée</legend>
 
         <div class="uk-margin">
-            <input name="edit-titre" class="addn uk-input" type="text" placeholder="Titre">
+            <input name="titre" class="addn uk-input" type="text" placeholder="Titre">
         </div>
 
         <div class="uk-margin">
-            <textarea name="edit-content" class="addn uk-textarea" rows="5" placeholder="Le contenu"></textarea>
+            <textarea name="content" class="addn uk-textarea" rows="5" placeholder="Le contenu"></textarea>
         </div>
         <center>
         <input type="checkbox" id="sendmails" name="sendtoall" value="sendm">
@@ -143,7 +169,7 @@ html,body {background:white;}
         </div>
 
         <div class="uk-margin">
-            <textarea name="news-content" class="addn uk-textarea" rows="5" placeholder="Le contenu"></textarea>
+            <textarea name="content" class="addn uk-textarea" rows="5" placeholder="Le contenu"></textarea>
         </div>
         <center>
         <input type="checkbox" id="sendmails" name="sendtoall" value="sendm">
@@ -153,8 +179,8 @@ html,body {background:white;}
 
     </fieldset>
 </form>
+
 </div>
-<?php include("../inc/SMTP/smtp-actualite.php");?>
 
 
   <!-- Footer -->

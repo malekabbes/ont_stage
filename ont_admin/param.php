@@ -22,8 +22,9 @@ include("../inc/login-inc.php");
 <script src="../js/time.js"></script>
 <script src="../js/editemp-input-set.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
-<link rel="stylesheet" href="../css/w3.css">
+
 <link rel="stylesheet" href="../css/ui.css" />
+<link rel="stylesheet" href="../css/w3.css">
 
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
@@ -58,13 +59,13 @@ html,body {background:white;}
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
     <a href="interface.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Accueil</a>
-    <a href="param.php" class="w3-bar-item w3-button w3-padding " ><i class="fa fa-cog fa-fw"></i>  Settings</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Les Employés</a>
-    <a href="actualite.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i> Actualités</a> 
-    <a href="activites.php" class="w3-bar-item w3-button w3-padding"><i class="fas fa-eye"></i> Activités</a> 
+    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue" ><i class="fa fa-cog fa-fw"></i>  Settings</a>
+    <a href="liste-emp.php" class="w3-bar-item w3-button w3-padding "><i class="fa fa-users fa-fw"></i>  Les Employés</a>
+    <a href="actualite.php" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i> Actualités</a>  
+    <a href="activites.php" class="w3-bar-item w3-button w3-padding"><i class="fas fa-eye fa-fw"></i> Activités</a>  
     <a href="demandes.php" class="w3-bar-item w3-button w3-padding"><i class="fas fa-paste"></i> Demandes Internes</a>    
-
-  </div> 
+  
+  </div>
     <br><br><br>
     <form action="../inc/dec.php" method="POST">
   <center><button name="dec" class="w3-button w3-red">Se Deconnecter</button></center>
@@ -80,77 +81,44 @@ html,body {background:white;}
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px;background:white;">
-    <h5 class="ont-dash"><b><i class="fas fa-users-cog"></i>&nbsp;&nbsp;ONT - Liste Des Employés </b></h5>
+    <h5 class="ont-dash"><b><i class="fas fa-users-cog"></i>&nbsp;&nbsp;ONT - Modifier vos paramétres </b></h5>
   </header>
   <br>
-
-<table class="uk-table uk-table-hover uk-table-divider uk-overflow-auto ont-tab">
-<thead>
-<tr>
-  <td></td>
- <td></td>
-                  <td>Recherche <form class="uk-search uk-search-default" action="" method="POST">
-              <input name ="search" class="uk-search-input"  type="search" placeholder="Search...">
-              <td style="margin-left:0;">
-              <button  type="submit" class="uk-button uk-button-primary uk-button-small perso-btn">Recherche</button>
-              <!-- <button  name="revenir" type="submit" class="uk-button uk-button-primary uk-button-small perso-btn">Revenir</button> -->
-
-            </form>
-</td>
-          
-
-          
-     
-      </tr>    
-
-        <tr>
-            <th>Matricule</th>
-            <th>Nom Complét</th>
-            <th>E-Mail </th>
-            <th>Congé</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php
-         include("../inc/emp-tab.php");?>
-    </tbody>
-</table>
-<ul class="uk-pagination uk-flex-center" uk-margin>
-<?php
-if($page>1)echo "<li class=\"uk-disabled\"><span>...</span></li>";
-echo "<li class=\"uk-active\"><span>".$page."</span></li>";
-if( ceil(($rowcountss+0.)/$pagerowlimit)>=($page+1))echo "<li><a href=\"liste-emp.php?page=".($page+1)."\"><span>".($page+1)."</span></li>";
-if( ceil(($rowcountss+0.)/$pagerowlimit)>=($page+2))echo "<li><a href=\"liste-emp.php?page=".($page+2)."\"><span uk-pagination-next></span></a></li>";
-if( ceil(($rowcountss+0.)/$pagerowlimit)>=($page+3))echo "<li class=\"uk-disabled\"><span>...</span></li>";
-?>
-</ul>
-<?php include("../inc/edit-emp.php"); ?>
-<form action="" id="formD" method="POST">
   <center>
-   <?php include("../inc/setting-emp.php"); ?>
-      <fieldset class="edituser" style="display:none;">
+<div class="modifier-parm">
+<form name="param-form" action="param.php" method="POST">
+    <fieldset class="uk-fieldset">
+      <?php
+        $mail=$_SESSION['email'];
+        $usr=$_SESSION['username'];
+        $phone=$_SESSION['phone'];
+      ?>
 
-        <legend class="uk-legend">Modifier les coordonnées </legend>
+        <legend class="uk-legend">Modifier Vos informations</legend>
 
         <div class="uk-margin">
-            <input name="username" class="addn uk-input" type="text" placeholder="Modifier le nom" >
+            <input name="username" class="param uk-input" type="text" placeholder="Votre Nom" value="<?php echo $usr ?>">
         </div>
+        <div class="uk-margin">
+            <input name="email" class="param uk-input" type="text" placeholder="Votre email" value="<?php echo $mail ?>">
+        </div>
+        <div class="uk-margin">
+            <input name="phone" class="param uk-input" type="text" placeholder="Votre telephone" value="<?php echo $phone ?>">
+        </div>
+        <div class="uk-margin">
+            <input name="password" class="param uk-input" type="password" placeholder="Votre nouveau mot de passe">
+        </div>
+        <br>
+        <button type="submit" name="param-valid" class="uk-button uk-button-secondary">Valider</button>
 
-        <div class="uk-margin">
-            <input name="email" class="addn uk-input" type="mail" placeholder="Modifier l'Email " >
-        </div>
-        <div class="uk-margin">
-        <input name="conge" class="addn uk-input" type="date" placeholder="Modifier la date du congé" ">
-        </div>
-        <center><button name="edituser" class="validate-btn uk-button uk-button-primary" type="submit">Valider</button></center>
-        <input type="text" id="IDs" value="0" name="IDs" hidden>
 
     </fieldset>
- 
-</center>
 </form>
+<?php include("../inc/inc.param.php");?>
 
 
+</div>
+</center>
 
   <!-- Footer -->
 

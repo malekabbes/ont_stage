@@ -3,7 +3,7 @@ include("db.php");
 
 if (isset($_POST["valid-btn"])){
   $title=$_POST["titre"];
-  $content=$_POST["news-content"];
+  $content=$_POST["content"];
 $actu = "INSERT INTO actualite (titre,content) VALUES ('$title','$content')";
 //mysqli_query($mysqli,$actu); 
 
